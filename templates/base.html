@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8" />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/base.css') }}"
+        />
+        {% block stylelink %}{% endblock %}
+        <title>100OK</title>
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>
