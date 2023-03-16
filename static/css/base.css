@@ -1,9 +1,14 @@
-body {
+*{
     margin: 0;
     padding: 0;
+}
+
+
+body {
     font-family: Helvetica;
     background-color: grey;
 }
+
 .content {
     text-align: center;
     background-color: #f7f7f7;
