@@ -12,7 +12,6 @@ socketio = SocketIO(app)
 
 GAMES = {}
 
-
 def generate_unique_code(length):
     while True:
         code = ""
@@ -21,7 +20,6 @@ def generate_unique_code(length):
         
         if code not in GAMES:
             break
-    
     return code
 
 @app.route("/", methods=["POST", "GET"])
@@ -32,7 +30,6 @@ def home():
         code = request.form.get("code")
         if not name:
             return render_template("home.html", error="Please enter a name.", code=code, name=name)
-        
         room = code
         
         if code not in GAMES:
@@ -79,7 +76,7 @@ def connect(auth):
         GAMES[room]["master"] = request.sid
         
     if not host:
-        send({"name": name, "message": "has entered the room"}, to=GAMES[room]["master"])
+        send({"name": name}, to=GAMES[room]["master"])
     GAMES[room]["members"] += 1
     print(f"{name} joined room {room}")
 

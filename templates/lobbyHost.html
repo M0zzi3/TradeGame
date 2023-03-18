@@ -1,31 +1,38 @@
 {% extends 'base.html' %} {% block body %}
 <div class="message-box">
     <h2>Chat Room: {{code}}</h2>
-    <div class="messages" id="messages"></div>
+    <button>START GAME</button>
+    <div class="usersInLobby" id="usersInLobby"></div>
     <div class="inputs"></div>
 </div>
 <script type="text/javascript">
     var socketio = io();
 
-    const messages = document.getElementById("messages");
+    const usersInLobby = document.getElementById("usersInLobby");
+    let users = [];
 
-    const createMessage = (name, msg) => {
-        const content = `
-    <div class="text">
-        <span>
-            <strong>${name}</strong>: ${msg}
-        </span>
-    </div>
-    `;
-        messages.innerHTML += content;
+    const addUser = userName => {
+        let content = "";
+        users.push(userName);
+        for (var i = 0; i < users.length; i++) {
+            content += `
+            <div class="user">
+                <span>
+                    <strong>${users[i]}</strong>
+                </span>
+            </div>`;
+        }
+        usersInLobby.innerHTML = content;
     };
 
     socketio.on("message", data => {
-        createMessage(data.name, data.message);
+        addUser(data.name);
     });
 </script>
-{% for msg in messages %}
+<!-- {% for msg in messages %}
 <script type="text/javascript">
+    console.log("coś starego tutaj nie wiem co to")
     createMessage("{{msg.name}}", "{{msg.message}}");
 </script>
-{% endfor %} {% endblock %}
+{% endfor %}  -->
+{% endblock %}

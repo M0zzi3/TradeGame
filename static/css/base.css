@@ -1,25 +1,24 @@
-*{
+* {
     margin: 0px;
     border: 0px;
 }
 
-:root{
+:root {
     --background_color: #343a40;
 }
 
-body{
+body {
     background: var(--background_color);
-
 }
 
-.content{
+.content {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100dvh;
 }
 
-.UserInput-Box{
+.UserInput-Box {
     background: blue;
     display: flex;
     flex-direction: column;
@@ -27,15 +26,12 @@ body{
     font-size: 26px;
 }
 
-.JoinGame-Box{
+.JoinGame-Box {
     padding: 20px;
     background: red;
 }
 
-.HostGame-Box{
+.HostGame-Box {
     padding: 20px;
     background: yellow;
-
-
-
 }
