@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% block body %}
+<div class="message-box">
+    <h2>Chat Room: {{code}}</h2>
+    <div class="messages" id="messages"></div>
+    <div class="inputs"></div>
+</div>
+<script type="text/javascript">
+    var socketio = io();
+
+    const messages = document.getElementById("messages");
+
+
+    socketio.on("message", data => {
+        console.log("contected")
+    });
+</script>
+{% endblock %}
