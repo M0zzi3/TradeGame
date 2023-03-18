@@ -1,6 +1,28 @@
 {% extends "base.html" %} {% block body %}
 <div class="content">
-    <a class="button" href="/hostgame">HOST GAME</a>
-    <a class="button" href="/playgame">PLAY GAME</a>
+
+
+
+    <div class ="UserInput-Box">
+
+
+        <div class="JoinGame-Box">
+            <input type="text"
+                    name="gameID">
+
+            <button class="start button" type="button">JOIN GAME</button>
+        </div>
+        <div>
+            OR..
+        </div>
+        <div class="HostGame-Box">
+            <button class="start button" type="button">HOST GAME</button>
+        </div>
+
+
+
+    </div>
+
+
 </div>
 {% endblock %}

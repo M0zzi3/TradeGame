@@ -1,0 +1,41 @@
+*{
+    margin: 0px;
+    border: 0px;
+}
+
+:root{
+    --background_color: #343a40;
+}
+
+body{
+    background: var(--background_color);
+
+}
+
+.content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100dvh;
+}
+
+.UserInput-Box{
+    background: blue;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 26px;
+}
+
+.JoinGame-Box{
+    padding: 20px;
+    background: red;
+}
+
+.HostGame-Box{
+    padding: 20px;
+    background: yellow;
+
+
+
+}
