@@ -58,6 +58,16 @@ def room():
         return redirect(url_for("home"))
     return render_template("lobbyUser.html", code=room)
 
+@socketio.on("startGame")
+def message(data):
+    print("test")
+    room = session.get("room")
+    if room not in GAMES:
+        return 
+    content = {"action":"STARTGAME"}
+    send(content, to=room)
+
+
 @socketio.on("connect")
 def connect(auth):
     room = session.get("room")
@@ -76,7 +86,7 @@ def connect(auth):
         GAMES[room]["master"] = request.sid
         
     if not host:
-        send({"name": name}, to=GAMES[room]["master"])
+        send({"action":"ADDUSER","name": name}, to=GAMES[room]["master"])
     GAMES[room]["members"] += 1
     print(f"{name} joined room {room}")
 
