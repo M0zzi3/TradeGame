@@ -1,7 +1,22 @@
-{% extends "base.html" %} {% block body %} {% block stylelink %} {% endblock %}
-<div class="content" id="content">test</div>
-<script
-    type="text/javascript"
-    src="{{url_for('static',filename='script/home.js')}}"
-></script>
+{% extends "base.html" %}
+{% block body %}
+
+    <div class="content">
+    <div class="UserInput-Box">
+        <div class="JoinGame-Box">
+            <button class="start button" type="button" onclick="joinGame()">
+                JOIN GAME
+            </button>
+            <input type="text" placeholder="Room Code" name="code" value=""/>
+
+        </div>
+        <div class="HostGame-Box">
+            <button class="start button" type="button" onclick="hostGame()">
+                HOST GAME
+            </button>
+        </div>
+    </div>
+    </div>
+
+
 {% endblock %}
