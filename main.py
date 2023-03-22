@@ -22,6 +22,11 @@ def generate_unique_code(length):
             break
     return code
 
+@app.route("/getGames")
+def getGames():
+    return GAMES
+
+
 @app.route("/", methods=["POST", "GET"])
 def home():
     session.clear()

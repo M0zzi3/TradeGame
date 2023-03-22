@@ -9,12 +9,28 @@ function hostGame() {
 
 
 function joinGame() {
-    const divv = document.getElementById("content");
-    divv.innerHTML = `<form method="post" class="buttons">
-    <label>Name:</label>
-    
-    <input type="text" placeholder="Pick a name!" name="name" value="" />
-    
-    <button type="submit" name="join">Join a Room</button>
-</form>`;
+    var roomCode = document.getElementsByClassName("room code")[0].value;
+    console.log("JSON REQUEST")
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/getGames");
+    xhr.send();
+    xhr.responseType = "json";
+
+    xhr.onload = () => {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        const data = xhr.response;
+        console.log(data);
+
+
+
+    } else {
+        console.log(`Error: ${xhr.status}`);
+    }
+
+};
+
+
+
+
 }
