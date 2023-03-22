@@ -1,10 +1,6 @@
-
 function hostGame() {
-    console.log("asdasdasdasd")
     window.location.replace("/host");
 }
-
-
 
 
 
@@ -18,19 +14,29 @@ function joinGame() {
     xhr.responseType = "json";
 
     xhr.onload = () => {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-        const data = xhr.response;
-        console.log(data);
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            const data = xhr.response;
+            console.log(data);
 
+            let joinGame = false;
 
+            for (let gamecode in data) {
+                console.log(gamecode);
+                if (roomCode == gamecode) {
+                    joinGame = true;
+                    break;
+                }
+            }
 
-    } else {
-        console.log(`Error: ${xhr.status}`);
+            if (joinGame) {
+                console.log("GAME JOIN")
+                window.location.replace("/joinRoom");
+                // const pageContent = document.getElementsByClassName("content")
+                // pageContent.innerHTML = document.textContent("joinRoom.html")
+            }
+
+        } else {
+            console.log(`Error: ${xhr.status}`);
+        }
     }
-
-};
-
-
-
-
 }

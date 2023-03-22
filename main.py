@@ -63,6 +63,11 @@ def room():
         return redirect(url_for("home"))
     return render_template("lobbyUser.html", code=room)
 
+@app.route("/joinRoom")
+def joinRoom():
+    return render_template("joinRoom.html")
+
+
 @socketio.on("startGame")
 def message(data):
     print("test")
