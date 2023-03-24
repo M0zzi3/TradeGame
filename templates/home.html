@@ -4,10 +4,24 @@
     <div class="content">
     <div class="UserInput-Box">
         <div class="JoinGame-Box">
-            <button class="start button" type="button" onclick="joinGame()">
-                JOIN GAME
-            </button>
-            <input class="room code" type="text" placeholder="Room Code" value=""/>
+
+
+        <form method="post" onsubmit="changeButton()">
+            <div>
+                <p>
+                {{ form.roomCode_value.label }}
+                {{ form.roomCode_value(size=4) }}
+                </p>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+
+
+
+
 
         </div>
         <div class="HostGame-Box">

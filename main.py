@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from flask_socketio import join_room, leave_room, send, SocketIO
 import random
 from string import ascii_uppercase
-
+from classes import RoomCodeForm
 from datetime import timedelta
 
 app = Flask(__name__)
@@ -29,6 +29,8 @@ def getGames():
 
 @app.route("/", methods=["POST", "GET"])
 def home():
+    rc_form = RoomCodeForm
+
     session.clear()
     if request.method == "POST":
         name = request.form.get("name")
@@ -45,7 +47,7 @@ def home():
         session["host"] = False
         return redirect(url_for("room"))
 
-    return render_template("home.html")
+    return render_template("home.html", form = rc_form)
 
 @app.route("/host")
 def hostGame():
