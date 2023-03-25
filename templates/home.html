@@ -5,30 +5,23 @@
     <div class="UserInput-Box">
         <div class="JoinGame-Box">
 
-
-        <form method="post" onsubmit="changeButton()">
-            <div>
-                <p>
-                {{ form.roomCode_value.label }}
-                {{ form.roomCode_value(size=4) }}
-                </p>
-            </div>
+        <form action="#", method="post">
+            <p><input type="text", name="user_game_code"></p>
+            <p><input class="start button"  type="submit" value="JOIN GAME"></p>
         </form>
-    </div>
-</section>
-
-
-
-
-
 
 
         </div>
+
         <div class="HostGame-Box">
             <button class="start button" type="button" onclick="hostGame()">
                 HOST GAME
             </button>
         </div>
+
+
+
+
     </div>
     </div>
 
