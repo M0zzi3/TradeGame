@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block body %}
-<div class="message-box">
+<div class="content">
   <h2>Chat Room: {{code}}</h2>
   <div id="startGameButtonDiv">
     <button onclick="startGame()">START GAME</button>
@@ -42,10 +42,4 @@
     }
   });
 </script>
-<!-- {% for msg in messages %}
-<script type="text/javascript">
-    console.log("coś starego tutaj nie wiem co to")
-    createMessage("{{msg.name}}", "{{msg.message}}");
-</script>
-{% endfor %}  -->
 {% endblock %}
