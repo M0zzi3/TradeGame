@@ -4,10 +4,12 @@
 }
 
 :root {
-    --background_color: #343a40;
+    --background_color: #282c34;
+    --element_color: #22b8cf;
 }
 
 body {
+    font-family: Arial, sans-serif;
     background: var(--background_color);
 }
 
