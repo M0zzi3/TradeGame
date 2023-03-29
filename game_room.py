@@ -4,10 +4,10 @@ room = Blueprint(__name__, "room")
 
 
 @room.route("/")
-def home():
+def home_room():
     if not session["host"]:
         # return render_template()
-        pass
+        return "test host"
     else:
 
 

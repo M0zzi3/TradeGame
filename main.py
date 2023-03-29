@@ -31,16 +31,18 @@ def home():
     if request.method == "POST":
         name = request.form.get("name")
         code = request.form.get("user_game_code")
+
+
         # if not name:
         #     return render_template("home.html", error="Please enter a name.", code=code, name=name)
 
-        if code not in GAMES:
-            return render_template("home.html", error="Room does not exist.", code=code, name=name)
+        # if code not in GAMES:
+        #     return render_template("home.html", error="Room does not exist.", code=code, name=name)
 
 
         session["host"] = False
         session["code"] = code
-        return redirect(url_for("/room"))
+        return redirect(url_for("game_room.home_room"))
 
     return render_template("home.html")
 
