@@ -10,9 +10,9 @@ const addUser = (userName) => {
   users.push(userName);
   for (var i = 0; i < users.length; i++) {
     content += `
-              <div class="user">
-                      <strong>${users[i]}</strong>
-              </div>`;
+    <div class="user">
+      <strong>${users[i]}</strong>
+    </div>`;
   }
   usersInLobby.innerHTML = content;
 };
@@ -20,7 +20,23 @@ const addUser = (userName) => {
 function startGame() {
   socketio.emit("startGame", { data: "Test" });
   document.getElementById("lobby").innerHTML = "";
-  divGame.innerHTML = `magiczna gra właśnie sie zaczeła a ty jesteś jej hostem`;
+  divGame.innerHTML = `
+  You Are Host
+    <div class="timer">
+      <span id="countdown">15</span>
+    </div>`;
+  var countdownTimer = setInterval("countdown()", 1000); // Tu jeszcze do poprawy
+}
+
+var seconds = 15; // Tu jeszcze do poprawy
+function countdown() {
+  // Tu jeszcze do poprawy
+  seconds = seconds - 1;
+  if (seconds < 0) {
+    clearInterval(countdownTimer);
+  } else {
+    document.getElementById("countdown").innerHTML = seconds;
+  }
 }
 
 socketio.on("message", (data) => {

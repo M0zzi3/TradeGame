@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block stylelink %}
 <link
   rel="stylesheet"
-  href="{{ url_for('static', filename='css/lobbyHost.css') }}"
+  href="{{ url_for('static', filename='css/host.css') }}"
 />
 {% endblock %} {% block body %}
 
@@ -15,9 +15,7 @@
     </div>
     <div class="displayusers" id="usersInLobby"></div>
   </div>
-  <div id="game">
-    <div id="content"></div>
-  </div>
+  <div id="game"></div>
 </div>
 
 <script
