@@ -49,7 +49,7 @@ def hostGame():
     session["room"] = room
     session["host"] = True
     print("room Created")
-    return render_template("lobbyHost.html",code=room)
+    return render_template("host.html",code=room)
 
 @app.route("/room")
 def room():

@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% block stylelink %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/lobbyHost.css') }}"
+/>
+{% endblock %} {% block body %}
+
+<div class="content">
+  <div id="lobby">
+    <div class="lobbynav">
+      <h2>Chat Room: {{code}}</h2>
+      <div id="startGameButtonDiv">
+        <button class="startGame" onclick="startGame()">START GAME</button>
+      </div>
+    </div>
+    <div class="displayusers" id="usersInLobby"></div>
+  </div>
+  <div id="game">
+    <div id="content"></div>
+  </div>
+</div>
+
+<script
+  type="text/javascript"
+  src="{{url_for('static',filename='script/host.js')}}"
+></script>
+{% endblock %}
