@@ -1,0 +1,21 @@
+input{
+  height: 10%;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  border-radius: 5px;
+}
+h1 {
+  color: var(--element_color);
+}
+
+@media screen and (max-width: 800px) {
+  .content {
+    width: 65%; /* The width is 100%, when the viewport is 800px or smaller */
+  }
+}
+
+button:hover {
+  background-color: #1b8fa0;
+}

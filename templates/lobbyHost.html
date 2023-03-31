@@ -1,52 +1,45 @@
 {% extends 'base.html' %} {% block body %}
-<div class="message-box">
-    <h2>Chat Room: {{code}}</h2>
-    <div id="startGameButtonDiv">
-        <button onclick="startGame()">START GAME</button>
-    </div>
-    <div class="usersInLobby" id="usersInLobby"></div>
-    <div id="content"></div>
+<div class="content">
+  <h2>Chat Room: {{code}}</h2>
+  <div id="startGameButtonDiv">
+    <button onclick="startGame()">START GAME</button>
+  </div>
+  <div class="usersInLobby" id="usersInLobby"></div>
+  <div id="content"></div>
 </div>
 <script type="text/javascript">
-    var socketio = io();
+  var socketio = io();
 
-    const usersInLobby = document.getElementById("usersInLobby");
-    let users = [];
+  const usersInLobby = document.getElementById("usersInLobby");
+  let users = [];
 
-    const addUser = userName => {
-        let content = "";
-        users.push(userName);
-        for (var i = 0; i < users.length; i++) {
-            content += `
+  const addUser = (userName) => {
+    let content = "";
+    users.push(userName);
+    for (var i = 0; i < users.length; i++) {
+      content += `
             <div class="user">
                 <span>
                     <strong>${users[i]}</strong>
                 </span>
             </div>`;
-        }
-        usersInLobby.innerHTML = content;
-    };
-    function startGame() {
-        socketio.emit("startGame", { data: "Test" });
-        document.getElementById("startGameButtonDiv").style.visibility =
-            "hidden";
-        const divContent = document.getElementById("content");
-
-        divContent.innerHTML = `magiczna gra właśnie sie zaczeła a ty jesteś jej hostem
-        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjExZTQ5ZGY4OTY2Nzc4Njc2MTc2YjJhMzc3YjEzYjhlYjI5YTEwMCZjdD1z/atgjIXHBJNaSGcwm7r/giphy.gif">`;
     }
-    socketio.on("message", data => {
-        if (data.action == "ADDUSER") {
-            addUser(data.name);
-        } else {
-            return;
-        }
-    });
+    usersInLobby.innerHTML = content;
+  };
+  function startGame() {
+    socketio.emit("startGame", { data: "Test" });
+    document.getElementById("startGameButtonDiv").style.visibility = "hidden";
+    const divContent = document.getElementById("content");
+
+    divContent.innerHTML = `magiczna gra właśnie sie zaczeła a ty jesteś jej hostem
+        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjExZTQ5ZGY4OTY2Nzc4Njc2MTc2YjJhMzc3YjEzYjhlYjI5YTEwMCZjdD1z/atgjIXHBJNaSGcwm7r/giphy.gif">`;
+  }
+  socketio.on("message", (data) => {
+    if (data.action == "ADDUSER") {
+      addUser(data.name);
+    } else {
+      return;
+    }
+  });
 </script>
-<!-- {% for msg in messages %}
-<script type="text/javascript">
-    console.log("coś starego tutaj nie wiem co to")
-    createMessage("{{msg.name}}", "{{msg.message}}");
-</script>
-{% endfor %}  -->
 {% endblock %}

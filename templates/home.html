@@ -1,7 +1,21 @@
-{% extends "base.html" %} {% block body %} {% block stylelink %} {% endblock %}
-<div class="content" id="content">test</div>
+{% extends "base.html" %} {% block body %} {% block stylelink %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/home.css') }}"
+/>
+{% endblock %}
+<div class="content" id="content">
+  <div class="login-container">
+    <button class="start button" type="button" onclick="joinGame()">
+      JOIN GAME
+    </button>
+    <button class="start button" type="button" onclick="hostGame()">
+      HOST GAME
+    </button>
+  </div>
+</div>
 <script
-    type="text/javascript"
-    src="{{url_for('static',filename='script/home.js')}}"
+  type="text/javascript"
+  src="{{url_for('static',filename='script/home.js')}}"
 ></script>
 {% endblock %}
