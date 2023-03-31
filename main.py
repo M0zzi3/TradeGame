@@ -45,7 +45,7 @@ def home():
 @app.route("/host")
 def hostGame():
     room = generate_unique_code(4)
-    GAMES[room] = {"master":"", "members": 0}
+    GAMES[room] = {"master":"", "members": 0,"CanJoin":True} 
     session["room"] = room
     session["host"] = True
     print("room Created")
@@ -56,14 +56,16 @@ def room():
     room = session.get("room")
     if room is None or session.get("name") is None or room not in GAMES:
         return redirect(url_for("home"))
-    return render_template("lobbyUser.html", code=room)
+    return render_template("user.html", code=room)
 
 @socketio.on("startGame")
 def message(data):
-    print("test")
+    print("StartGame")
     room = session.get("room")
     if room not in GAMES:
         return 
+    GAMES[room]["CanJoin"] = False
+
     content = {"action":"STARTGAME"}
     send(content, to=room)
 
@@ -83,7 +85,7 @@ def connect(auth):
     
     join_room(room)
     if session.get("host"):
-        GAMES[room]["master"] = request.sid
+        GAMES[room]["master"] = request.sid # type: ignore (somting wrong?)
         
     if not host:
         send({"action":"ADDUSER","name": name}, to=GAMES[room]["master"])

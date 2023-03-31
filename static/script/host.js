@@ -17,28 +17,6 @@ const addUser = (userName) => {
   usersInLobby.innerHTML = content;
 };
 
-function startGame() {
-  socketio.emit("startGame", { data: "Test" });
-  document.getElementById("lobby").innerHTML = "";
-  divGame.innerHTML = `
-  You Are Host
-    <div class="timer">
-      <span id="countdown">15</span>
-    </div>`;
-  var countdownTimer = setInterval("countdown()", 1000); // Tu jeszcze do poprawy
-}
-
-var seconds = 15; // Tu jeszcze do poprawy
-function countdown() {
-  // Tu jeszcze do poprawy
-  seconds = seconds - 1;
-  if (seconds < 0) {
-    clearInterval(countdownTimer);
-  } else {
-    document.getElementById("countdown").innerHTML = seconds;
-  }
-}
-
 socketio.on("message", (data) => {
   if (data.action == "ADDUSER") {
     addUser(data.name);
@@ -46,3 +24,36 @@ socketio.on("message", (data) => {
     return;
   }
 });
+
+function startGame() {
+  socketio.emit("startGame", { data: "Test" });
+  document.getElementById("lobby").innerHTML = "";
+  divGame.innerHTML = `
+  You Are Host
+    <div class="timer">
+      <span id="countdown">15</span>
+    </div>
+    <div id="gold">
+    </div>
+    `;
+  var countdownTimer = setInterval("countdown()", 1000); // Tu jeszcze do poprawy
+}
+
+function UpdateSesion() {
+
+};
+
+var seconds = 15; // Tu jeszcze do poprawy
+
+function countdown() {
+  // Tu jeszcze do poprawy
+  seconds = seconds - 1;
+  if (seconds < 0) {
+    seconds = 15
+    console.log("textMove")
+  } else {
+    document.getElementById("countdown").innerHTML = seconds;
+  }
+};
+
+
