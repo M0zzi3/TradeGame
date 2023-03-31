@@ -1,0 +1,28 @@
+.box {
+    background-color: var(--element_color);
+    color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 150%;
+  }
+.wrapper {
+  width: 100%;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(4, 25%);    
+}
+.content{
+  width: 60%;
+  padding-right: 5%;
+}
+.topnav{
+  display: grid;
+  grid-template-columns: 50% 50% ;
+  grid-gap: auto;
+}
+.startGame{
+  background-color:  #28cf22;
+}
+h1{
+  padding: 22px;
+}

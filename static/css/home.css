@@ -1,15 +1,3 @@
-button {
-  background-color: var(--element_color);
-  border: none;
-  border-radius: 5px;
-  color: #ffffff;
-  cursor: pointer;
-  font-size: 20px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  padding: 10px;
-  width: 100%;
-}
 input{
   height: 10%;
   width: 100%;
