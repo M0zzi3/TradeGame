@@ -97,7 +97,7 @@ def disconnect():
 
 @socketio.on("periodEnd")
 def updateAllVauleInGame():
-    print("update data")
+    print("[UPDATE DATA]")
     room = session.get("room")
     
     socketio.emit("updateValue",{"gold":random.randint(0, 100)},to=room)
@@ -111,8 +111,10 @@ def message(data):
     GAMES[room]["CanJoin"] = False
 
     content = {"action":"STARTGAME"}
-    # updateAllVauleInGame()
     send(content, to=room)
+    socketio.emit("userStartGame","game was start",to=room)
+    updateAllVauleInGame()
+    
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)

@@ -30,13 +30,12 @@ function startGame() {
   socketio.emit("startGame", { data: "Test" });
   document.getElementById("lobby").innerHTML = "";
   divGame.innerHTML = `
-  You Are Host
+    <h1>Trade Game</h1>
     <div class="timer">
       <span id="countdown"></span>
     </div>
     Gold:
-    <div id="gold">
-    </div>
+    <div id="goldvalue"></div>
     `;
   var countdownTimer = setInterval("countdown()", 1000); // Tu jeszcze do poprawy
 }
@@ -60,5 +59,6 @@ function periodEnd() {
 }
 
 socketio.on("updateValue", (data) => {
-  document.getElementById("gold").innerHTML = data.gold;
+  document.getElementById("goldvalue").innerHTML = data.gold;
+  console.log(data.gold);
 });

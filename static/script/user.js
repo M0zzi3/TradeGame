@@ -1,20 +1,22 @@
 var socketio = io();
-socketio.on("message", (data) => {
-  console.log(data);
-  if ((data.action = "STARTGAME")) {
-    startGame();
-  }
-});
-function startGame() {
+let goldValue = [];
+socketio.on("userStartGame", (data) => {
+  const divLobby = document.getElementById("lobby");
+  divLobby.innerHTML = "";
   const divGame = document.getElementById("game");
   divGame.innerHTML = `
-        magiczna gra właśnie sie zaczeła
-        Gold: 
+        <h1>GAME</h1>
+        <h2> Gold: <h2> 
         <div id="gold">
         </div>`;
-}
+});
 
 socketio.on("updateValue", (data) => {
-  console.log("catch");
+  goldValue.push(data.gold);
+  if (goldValue.length > 30) {
+    goldValue.shift();
+  }
+  console.log(goldValue);
+  console.log(data.gold);
   document.getElementById("gold").innerHTML = data.gold;
 });
