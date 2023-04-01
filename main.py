@@ -45,7 +45,7 @@ def home():
 @app.route("/host")
 def hostGame():
     room = generate_unique_code(4)
-    GAMES[room] = {"master":"", "members": 0,"CanJoin":True} 
+    GAMES[room] = {"master":"", "members": 0,"canJoin":True} 
     session["room"] = room
     session["host"] = True
     print("room Created")
@@ -54,20 +54,9 @@ def hostGame():
 @app.route("/room")
 def room():
     room = session.get("room")
-    if room is None or session.get("name") is None or room not in GAMES:
+    if room is None or session.get("name") is None or room not in GAMES or GAMES[room]["canJoin"] == False:
         return redirect(url_for("home"))
     return render_template("user.html", code=room)
-
-@socketio.on("startGame")
-def message(data):
-    print("StartGame")
-    room = session.get("room")
-    if room not in GAMES:
-        return 
-    GAMES[room]["CanJoin"] = False
-
-    content = {"action":"STARTGAME"}
-    send(content, to=room)
 
 
 @socketio.on("connect")
@@ -85,10 +74,10 @@ def connect(auth):
     
     join_room(room)
     if session.get("host"):
-        GAMES[room]["master"] = request.sid # type: ignore (somting wrong?)
+        GAMES[room]["master"] = request.sid # type: ignore (someting wrong?)
         
     if not host:
-        send({"action":"ADDUSER","name": name}, to=GAMES[room]["master"])
+        socketio.emit("addUser",{"name": name}, to=GAMES[room]["master"])
     GAMES[room]["members"] += 1
     print(f"{name} joined room {room}")
 
@@ -102,9 +91,28 @@ def disconnect():
         GAMES[room]["members"] -= 1
         if GAMES[room]["members"] <= 0:
             del GAMES[room]
-    
-    send({"name": name, "message": "has left the room"}, to=room)
+    socketio.emit("deleteUser",{"name": name}, to=GAMES[room]["master"])
     print(f"{name} has left the room {room}")
+
+
+@socketio.on("periodEnd")
+def updateAllVauleInGame():
+    print("update data")
+    room = session.get("room")
+    
+    socketio.emit("updateValue",{"gold":random.randint(0, 100)},to=room)
+
+@socketio.on("startGame")
+def message(data):
+    print("[StartGame]")
+    room = session.get("room")
+    if room not in GAMES:
+        return 
+    GAMES[room]["CanJoin"] = False
+
+    content = {"action":"STARTGAME"}
+    # updateAllVauleInGame()
+    send(content, to=room)
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)
