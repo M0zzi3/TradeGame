@@ -27,7 +27,7 @@ function udpateDisplayUserInLobby() {
 }
 
 function startGame() {
-  socketio.emit("startGame", { data: "Test" });
+  socketio.emit("startGame", { data: "Test" }); // Tu jest coś do poprawki nie powninno na pewno być test
   document.getElementById("lobby").innerHTML = "";
   divGame.innerHTML = `
     <h1>Trade Game</h1>
