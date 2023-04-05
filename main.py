@@ -138,5 +138,19 @@ def buy(data):
     
     socketio.emit("updateWallet",{"transactionStatus":True,"money":userObj.money,"wallet":userObj.walletContents},to=userObj.idd)
 
+@socketio.on("sell")
+def sell(data):
+    room = session.get("room")
+    userObj = GAMES[room]["usersObj"][request.sid]
+    masterObj = GAMES[room]["master"]
+    print(data["whatSell"])
+    if userObj.walletContents["gold"] > 0:
+        userObj.money += masterObj.gold.value
+        userObj.walletContents["gold"] -= 1
+    if room not in GAMES:
+        return
+    
+    socketio.emit("updateWallet",{"transactionStatus":True,"money":userObj.money,"wallet":userObj.walletContents},to=userObj.idd)
+
 if __name__ == "__main__":
     socketio.run(app, debug=True)

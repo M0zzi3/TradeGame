@@ -16,6 +16,10 @@ socketio.on("updateWallet", (data) => {
 function buyGold() {
   socketio.emit("buy", { whatBuy: "Gold" });
 }
+function sellGold() {
+  socketio.emit("sell", { whatSell: "Gold" });
+}
+
 function updatePotentialGoldValue() {
   document.getElementById("potential-gold-value").innerHTML =
     walletGold * goldValue[goldValue.length - 1] + "$";
