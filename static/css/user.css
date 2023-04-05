@@ -1,0 +1,31 @@
+#game {
+  display: none;
+}
+.transaction-btn {
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 10px;
+  width: 100%;
+}
+.sell {
+  background-color: red;
+}
+.buy {
+  background-color: green;
+}
+.game-bar {
+  position: sticky;
+  top: 0;
+  margin-top: 0;
+  width: auto;
+  background-color: var(--element_color);
+  padding: 10px;
+}
+#money {
+  text-align: center;
+}

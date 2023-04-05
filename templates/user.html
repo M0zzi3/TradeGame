@@ -1,13 +1,34 @@
-{% extends 'base.html' %} {% block body %}
-<div class="content">
-  <div id="lobby">
+{% extends 'base.html' %}{% block stylelink %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/user.css') }}"
+/>
+{% endblock %} {% block body %}
+<div id="lobby">
+  <div class="box">
     <h1>You are in game {{code}}</h1>
     <h2>Wait for host to start game...</h2>
   </div>
-  <div id="game"></div>
 </div>
-<script
-  type="text/javascript"
-  src="{{url_for('static',filename='script/user.js')}}"
-></script>
-{% endblock %}
+<div id="game">
+  <div class="game-bar box">
+    <h2><div id="money">1000$</div></h2>
+  </div>
+  <div class="box">
+
+    <h2>Aktualny kurs złota:</h2>
+    <div id="gold-value">100</div>
+    <h2>Ilość posiadanego złota:</h2>
+    <div id="wallet-gold">Pusto Brachu</div>
+    <h2>Potencjalna wartość złota</h2>
+    <div id="potential-gold-value"></div>
+    <button class="transaction-btn buy" onclick="buyGold()">Buy Gold</button>
+    <button class="transaction-btn sell" onclick="sellGold()">Sell Gold</button>
+  </div>
+</div>
+  <script
+    type="text/javascript"
+    src="{{url_for('static',filename='script/user.js')}}"
+  ></script>
+  {% endblock %}
+</div>
