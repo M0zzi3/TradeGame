@@ -46,11 +46,11 @@ def home():
 @app.route("/host")
 def hostGame():
     room = generate_unique_code(4)
-    GAMES[room] = {"master":"", "members": 0,"canJoin":True,"usersObj":{}} 
+    GAMES[room] = {"master":"", "members": 0, "canJoin":True, "usersObj":{}} 
     session["room"] = room
     session["host"] = True
     print("room Created")
-    return render_template("host.html",code=room)
+    return render_template("host.html", code=room)
 
 @app.route("/room")
 def room():
@@ -63,7 +63,7 @@ def room():
 @socketio.on("connect")
 def connect(auth):
     room = session.get("room")
-    name = session.get("name",False)
+    name = session.get("name",   False)
     host = session.get("host")
 
     if not room or not name and host == False :
@@ -82,7 +82,7 @@ def connect(auth):
         userObj = User(request.sid)
         GAMES[room]["usersObj"][request.sid] = userObj
         # print()
-        socketio.emit("addUser",{"name": name}, to=GAMES[room]["master"].idd)
+        socketio.emit("addUser", {"name": name}, to=GAMES[room]["master"].idd)
     GAMES[room]["members"] += 1
     print(f"{name} joined room {room}")
 
@@ -96,7 +96,7 @@ def disconnect():
         GAMES[room]["members"] -= 1
         if GAMES[room]["members"] <= 0:
             del GAMES[room]
-    socketio.emit("deleteUser",{"name": name}, to=GAMES[room]["master"].idd)
+    socketio.emit("deleteUser", {"name": name}, to=GAMES[room]["master"].idd)
     print(f"{name} has left the room {room}")
 
 
@@ -107,21 +107,21 @@ def updateAllVauleInGame():
     masterObj = GAMES[room]["master"]
     masterObj.updateValue()
 
-    socketio.emit("updateValue",{"gold":masterObj.gold.value},to=room)
+    socketio.emit("updateValue", {"gold":masterObj.goldInGame.value}, to=room)
 
 @socketio.on("startGame")
 def startGame(data):
-    print("[StartGame]")
+    print("[StartGame]", data["setings"])
     room = session.get("room")
     if room not in GAMES:
         return 
     GAMES[room]["CanJoin"] = False
     GAMES[room]["master"].startGame()
-    moneyOnStart = 1000
+    moneyOnStart = 100000
     for userIdd in GAMES[room]["usersObj"]:
         GAMES[room]["usersObj"][userIdd].setsettings(moneyOnStart)
     content = {"action":"STARTGAME"}
-    socketio.emit("userStartGame",{"moneyOnStart":moneyOnStart},to=room)
+    socketio.emit("userStartGame", {"moneyOnStart":moneyOnStart}, to=room)
     updateAllVauleInGame()
     
 @socketio.on("buy")
@@ -130,13 +130,14 @@ def buy(data):
     userObj = GAMES[room]["usersObj"][request.sid]
     masterObj = GAMES[room]["master"]
     print(data["whatBuy"])
-    if userObj.money >= masterObj.gold.value:
-        userObj.money -= masterObj.gold.value
+    if userObj.money >= masterObj.goldInGame.value:
+        userObj.money -= masterObj.goldInGame.value
+        masterObj.goldInGame.buyUpdate()
         userObj.walletContents["gold"] += 1
     if room not in GAMES:
         return
     
-    socketio.emit("updateWallet",{"transactionStatus":True,"money":userObj.money,"wallet":userObj.walletContents},to=userObj.idd)
+    socketio.emit("updateWallet", {"transactionStatus":True, "money":userObj.money, "wallet":userObj.walletContents}, to=userObj.idd)
 
 @socketio.on("sell")
 def sell(data):
@@ -145,12 +146,14 @@ def sell(data):
     masterObj = GAMES[room]["master"]
     print(data["whatSell"])
     if userObj.walletContents["gold"] > 0:
-        userObj.money += masterObj.gold.value
+        userObj.money += masterObj.goldInGame.value
+        masterObj.goldInGame.sellUpdate()
         userObj.walletContents["gold"] -= 1
     if room not in GAMES:
         return
     
-    socketio.emit("updateWallet",{"transactionStatus":True,"money":userObj.money,"wallet":userObj.walletContents},to=userObj.idd)
+    socketio.emit("updateWallet", {"transactionStatus":True, "money":userObj.money, "wallet":userObj.walletContents}, to=userObj.idd)
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)
+    # app.run(host="192.168.0.165",port = 80, debug=False) 
