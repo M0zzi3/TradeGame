@@ -29,20 +29,19 @@ function startGame() {
   socketio.emit("startGame", { setings: "setings" });
   document.getElementById("lobby").style.display = "none";
   document.getElementById("game").style.display = "block";
-  var countdownTimer = setInterval("countdown()", 1000); // Tu jeszcze do poprawy
+  countdownTimer = setInterval("countdown()", 1000); // Tu jeszcze do poprawy
 }
 
 var seconds = 5; // Tu jeszcze do poprawy aby było zmienna też zapisana tam w html bo jakoś dziwnie się generauje
-
 function countdown() {
   if (seconds <= 0) {
     seconds = 5;
     console.log("periodEnd");
-    document.getElementById("countdown").innerHTML = seconds;
+    document.getElementById("countdownday").innerHTML = seconds;
     periodEnd();
   } else {
     seconds = seconds - 1;
-    document.getElementById("countdown").innerHTML = seconds;
+    document.getElementById("countdownday").innerHTML = seconds;
   }
 }
 
@@ -53,4 +52,15 @@ function periodEnd() {
 socketio.on("updateValue", (data) => {
   document.getElementById("goldvalue").innerHTML = data.gold;
   console.log(data.gold);
+});
+
+socketio.on("updateGameDays", (data) => {
+  document.getElementById("countdowngame").innerHTML = data.daysleft;
+});
+
+socketio.on("endGame", function () {
+  clearInterval(countdownTimer);
+  document.getElementById("game").style.display = "none";
+  document.getElementById("endgame").style.display = "block";
+  console.log("game end");
 });

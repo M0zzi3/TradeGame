@@ -105,9 +105,14 @@ def updateAllVauleInGame():
     print("[UPDATE DATA]")
     room = session.get("room")
     masterObj = GAMES[room]["master"]
-    masterObj.updateValue()
-
-    socketio.emit("updateValue", {"gold":masterObj.goldInGame.value}, to=room)
+    masterObj.updatePeriod()
+    daysleft = masterObj.days
+    if masterObj.days <= 0:
+        print("game End")
+        socketio.emit("endGame", to=room)
+    else:
+        socketio.emit("updateValue", {"gold":masterObj.goldInGame.value}, to=room)
+        socketio.emit("updateGameDays",{"daysleft":daysleft}, to=masterObj.idd)
 
 @socketio.on("startGame")
 def startGame(data):

@@ -33,3 +33,9 @@ socketio.on("updateValue", (data) => {
   document.getElementById("gold-value").innerHTML = data.gold;
   updatePotentialGoldValue();
 });
+
+socketio.on("endGame", function () {
+  document.getElementById("game").style.display = "none";
+  document.getElementById("endgame").style.display = "block";
+  console.log("game end");
+});

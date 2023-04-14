@@ -1,4 +1,5 @@
-#game {
+#game,
+#endgame {
   display: none;
 }
 .transaction-btn {

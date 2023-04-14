@@ -15,7 +15,6 @@
     <h2><div id="money">1000$</div></h2>
   </div>
   <div class="box">
-
     <h2>Aktualny kurs złota:</h2>
     <div id="gold-value">100</div>
     <h2>Ilość posiadanego złota:</h2>
@@ -26,9 +25,11 @@
     <button class="transaction-btn sell" onclick="sellGold()">Sell Gold</button>
   </div>
 </div>
-  <script
-    type="text/javascript"
-    src="{{url_for('static',filename='script/user.js')}}"
-  ></script>
-  {% endblock %}
+<div id="endgame">
+  <div class="box">Gra skończyła się 😃</div>
 </div>
+<script
+  type="text/javascript"
+  src="{{url_for('static',filename='script/user.js')}}"
+></script>
+{% endblock %}

@@ -6,9 +6,11 @@ class Host:
         
     def startGame(self):
         self.goldInGame = self.Gold()
+        self.days = 4
 
-    def updateValue(self):
+    def updatePeriod(self):
         self.goldInGame.updateValue()
+        self.days -= 1
     
     class Gold:
         def __init__(self):
