@@ -79,7 +79,7 @@ def connect(auth):
         GAMES[room]["master"] = master # type: ignore (someting wrong?)
         
     if not host:
-        userObj = User(request.sid)
+        userObj = User(request.sid,name)
         GAMES[room]["usersObj"][request.sid] = userObj
         # print()
         socketio.emit("addUser", {"name": name}, to=GAMES[room]["master"].idd)
@@ -102,16 +102,34 @@ def disconnect():
 
 @socketio.on("periodEnd")
 def updateAllVauleInGame():
+    def take1(e):
+        return e[0]
+
     print("[UPDATE DATA]")
     room = session.get("room")
     masterObj = GAMES[room]["master"]
     masterObj.updatePeriod()
+    socketio.emit("updateValue", {"gold":masterObj.goldInGame.value}, to=room)
     daysleft = masterObj.days
     if masterObj.days <= 0:
         print("game End")
+        #calculate top player
+        userMoney = []
+        for useridd in GAMES[room]["usersObj"]:
+            user = GAMES[room]["usersObj"][useridd]
+            money = user.money
+            money =+ user.walletContents["gold"]*masterObj.goldInGame.value
+            userMoney.append([user.money,user])
+        print(userMoney)
+        userMoney.sort(key=take1,reverse=True)
+        print(userMoney)
+        socketio.emit("topplayer",{"firstplayer":userMoney[0][1].name}, to=masterObj.idd)
+        place = 1
+        for i in userMoney:
+            socketio.emit("placeonpodium", {"place":place},  to=i[1].idd)
+            place += 1
         socketio.emit("endGame", to=room)
     else:
-        socketio.emit("updateValue", {"gold":masterObj.goldInGame.value}, to=room)
         socketio.emit("updateGameDays",{"daysleft":daysleft}, to=masterObj.idd)
 
 @socketio.on("startGame")
@@ -160,5 +178,6 @@ def sell(data):
     socketio.emit("updateWallet", {"transactionStatus":True, "money":userObj.money, "wallet":userObj.walletContents}, to=userObj.idd)
 
 if __name__ == "__main__":
+    # app.run(host="192.168.0.165",port = 80, debug=False)  
     socketio.run(app, debug=True)
-    # app.run(host="192.168.0.165",port = 80, debug=False) 
+    

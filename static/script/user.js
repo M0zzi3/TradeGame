@@ -39,3 +39,6 @@ socketio.on("endGame", function () {
   document.getElementById("endgame").style.display = "block";
   console.log("game end");
 });
+socketio.on("placeonpodium", (data) => {
+  document.getElementById("place").innerHTML = data.place;
+});

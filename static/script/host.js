@@ -64,3 +64,8 @@ socketio.on("endGame", function () {
   document.getElementById("endgame").style.display = "block";
   console.log("game end");
 });
+
+socketio.on("topplayer", (data) => {
+  console.log(data);
+  document.getElementById("toppleyer").innerHTML = data.firstplayer;
+});
